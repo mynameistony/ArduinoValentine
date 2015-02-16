@@ -41,9 +41,8 @@ void setup(){
     Serial.print("Connecting: ");
     Serial.print(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:    
-    status = WiFi.begin(ssid);
     Serial.print("...");
-
+    status = WiFi.begin(ssid);
     // wait 10 seconds for connection:
     //delay(10000);
   }
@@ -57,7 +56,7 @@ void setup(){
 void loop()
 {
   if(test.getButtonState()){
-    Serial.print(test.printRandomMessage());
+    Serial.print(test.printRandomMessage(random(0,500)));
   }
   
   if(millis() - lastLight > 5000){

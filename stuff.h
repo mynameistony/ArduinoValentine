@@ -22,12 +22,9 @@ class LCD {
       lcd = new SoftwareSerial(RxPin,TxPin); //rx, tx
       
       lcd->begin(baud);
-      
-      
-      
+     
       lcd->write(12);
       lcd->write(22);      
-     
             
     };
     
@@ -124,6 +121,38 @@ class Valentines{
       pinMode(buttonPin,INPUT_PULLUP);      
   };  
   
+  void rickRoll(){
+    lcd->lightOn();
+    
+    lcd->print("We're no strangers to love");
+    delay(100);
+    lcd->print("You know the rules and so do I");
+    delay(100);
+    lcd->print("A full commitment's what I'm thinking of");
+    delay(100);
+    lcd->print("You wouldn't get this from any other guy");
+    delay(100);
+    lcd->print("I just wanna tell you how I'm feeling");
+    delay(100);
+    lcd->print("Gotta make you understand");
+    delay(100);
+    lcd->print("Never gonna give you up");
+    delay(100);
+    lcd->print("Never gonna let you down");
+    delay(100);
+    lcd->print("Never gonna run around and desert you");
+    delay(100);
+    lcd->print("Never gonna make you cry");
+    delay(100);
+    lcd->print("Never gonna say goodbye");
+    delay(100);
+    lcd->print("Never gonna tell a lie and hurt you");
+    delay(100);
+    
+    lcd->lightOff();
+    
+  }
+  
   void setFade(int newFade){
     analogWrite(LEDpin,newFade);
   };
@@ -146,7 +175,12 @@ class Valentines{
     return !digitalRead(buttonPin);
   };
   
-  char* printRandomMessage(){
+  char* printRandomMessage(int magicNumber){
+    
+    if(magicNumber == 420){
+      rickRoll();
+      return "RickRolled";
+    }
     char* thisMessage = messages[random(messageCount)];
     
     lcd->lightOn(); 
