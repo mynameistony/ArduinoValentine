@@ -5,8 +5,8 @@
 #include "stuff.h"
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "11FX07005026";
-char pass[] = "FB6B4756AB";  
+char ssid[] = "network";
+char pass[] = "password";  
 int keyIndex = 1;            
 
 unsigned int localPort = 2390;
