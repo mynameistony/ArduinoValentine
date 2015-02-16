@@ -124,30 +124,30 @@ class Valentines{
   void rickRoll(){
     lcd->lightOn();
     
-    lcd->print("We're no strangers to love");
-    delay(100);
-    lcd->print("You know the rules and so do I");
-    delay(100);
-    lcd->print("A full commitment's what I'm thinking of");
-    delay(100);
-    lcd->print("You wouldn't get this from any other guy");
-    delay(100);
-    lcd->print("I just wanna tell you how I'm feeling");
-    delay(100);
-    lcd->print("Gotta make you understand");
-    delay(100);
+    lcd->clear();
     lcd->print("Never gonna give you up");
-    delay(100);
+    delay(2000);
+    lcd->clear();
     lcd->print("Never gonna let you down");
-    delay(100);
-    lcd->print("Never gonna run around and desert you");
-    delay(100);
+    delay(2000);
+    lcd->clear();
+    lcd->print("Never gonna run around");
+    delay(1000);
+    lcd->clear();
+    lcd->print("and desert you");
+    delay(2000);
+    lcd->clear();
     lcd->print("Never gonna make you cry");
-    delay(100);
+    delay(2000);
+    lcd->clear();
     lcd->print("Never gonna say goodbye");
-    delay(100);
-    lcd->print("Never gonna tell a lie and hurt you");
-    delay(100);
+    delay(2000);
+    lcd->clear();
+    lcd->print("Never gonna tell a lie");
+    delay(1000);    
+    lcd->clear();
+    lcd->print("and hurt you :P");
+    delay(2000);    
     
     lcd->lightOff();
     
@@ -183,6 +183,8 @@ class Valentines{
     }
     char* thisMessage = messages[random(messageCount)];
     
+    lcd-> clear();
+    
     lcd->lightOn(); 
     
     lcd->write(1);
@@ -204,19 +206,20 @@ class Valentines{
     lcd->lightOff();
       
     lcd->clear();
-    
+        
     return thisMessage;
       
   };
   
-  void printDisplay(int thisHour, int thisMinute, boolean thisAM, int wifiStatus){
+  void printDisplay(int thisHour, int thisMinute, boolean thisAM){//, int wifiStatus){
     lcd->clear();
         
+/*
     if(!wifiStatus)
       lcd->print("!");
     else
        lcd->write(2); 
-       
+*/   
     lcd->setPos(0,8);
     
     if(thisHour < 10)

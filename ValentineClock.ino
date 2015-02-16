@@ -5,13 +5,15 @@
 #include "stuff.h"
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "home network";
-char pass[] = "mypassword";  
-int keyIndex = 0;            
+char ssid[] = "11FX07005026";
+char pass[] = "FB6B4756AB";  
+int keyIndex = 1;            
 
 unsigned int localPort = 2390;
 
-IPAddress timeServer(129, 6, 15, 28);
+IPAddress timeServer(216,228,192,69);
+// IPAddress timeServer(132, 163, 4, 102); // time-b.timefreq.bldrdoc.gov NTP server
+// IPAddress timeServer(132, 163, 4, 103); // time-c.timefreq.bldrdoc.gov NTP server
 
 const int NTP_PACKET_SIZE = 48;
 
@@ -37,26 +39,35 @@ void setup(){
     while(true);
   } 
   
-  while ( status != WL_CONNECTED) { 
-    Serial.print("Connecting: ");
-    Serial.print(ssid);
+/*  while ( status != WL_CONNECTED) { 
+//    Serial.print("Connecting: ");
+//    Serial.print(ssid);
+    test.lcd->clear();
+    test.lcd->print("Connecting WiFi");
+    
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:    
-    Serial.print("...");
-    status = WiFi.begin(ssid);
-    // wait 10 seconds for connection:
-    //delay(10000);
-  }
 
-  Serial.println("Done.");
-  Udp.begin(localPort);
+    
+    Serial.print("...");
+    status = WiFi.begin(ssid,keyIndex,pass);
+    // wait 10 seconds for connection:
+    delay(5000);
+  }
+    test.lcd->write(13);
+    test.lcd->print("Done");
+    printWifiStatus();    
+//  Serial.println("Done.");
+    Udp.begin(localPort);
   
-  setTime(getTime());
+    setTime(getTime());
+    */
 }
 
 void loop()
 {
   if(test.getButtonState()){
-    Serial.print(test.printRandomMessage(random(0,500)));
+    test.printRandomMessage(random(400,450));
+    test.printDisplay(hour,minute,isAM);//,status);
   }
   
   if(millis() - lastLight > 5000){
@@ -66,17 +77,17 @@ void loop()
   
   if(millis() - lastUpdate > 30000){
     lastUpdate = millis();
-    setTime(getTime());
-    test.printDisplay(hour,minute,isAM,status);
+    //setTime(getTime());
+    test.printDisplay(hour,minute,isAM);//,status);
   }
   
-  if(test.getDistance() < 50){
-    //Remove this
-    test.setFade(map(test.getDistance(),0,50,0,255));
-    test.lcd->lightOn();
-  }
-  Serial.print(test.getDistance());
-  Serial.print("\t");
+ //if(test.getDistance() < 50){
+ //   Remove this
+ //   test.setFade(map(test.getDistance(),0,50,0,255));
+ //   test.lcd->lightOn();
+  //  }
+  //Serial.print(test.getDistance());
+  //Serial.print("\t");
   
   Serial.print(hour);
   Serial.print(":");
@@ -91,7 +102,7 @@ void loop()
     
 }
 boolean setTime(int newTime){
-    if(newTime > 0){
+      if(newTime > 0){
       hour = (newTime / 100) - 8;
       minute = newTime % 100;
   
@@ -126,9 +137,14 @@ int getTime(){
     unsigned long epoch = secsSince1900 - seventyYears;  
     int hour = (epoch  % 86400L) / 3600;
     int minute = (epoch % 3600) / 60;
+    Serial.print("epoch: ");
+    Serial.println(epoch);
+    Serial.println(hour);
+    Serial.println(minute);
     return hour * 100 + minute;
   }
   else  {
+    Serial.println("Failed");
     return -1; 
   }
 }
@@ -136,12 +152,12 @@ int getTime(){
 // send an NTP request to the time server at the given address 
 unsigned long sendNTPpacket(IPAddress& address)
 {
-  //Serial.println("1");
+ Serial.println("1");
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE); 
   // Initialize values needed to form NTP request
   // (see URL above for details on the packets)
-  //Serial.println("2");
+  Serial.println("2");
   packetBuffer[0] = 0b11100011;   // LI, Version, Mode
   packetBuffer[1] = 0;     // Stratum, or type of clock
   packetBuffer[2] = 6;     // Polling Interval
@@ -152,16 +168,16 @@ unsigned long sendNTPpacket(IPAddress& address)
   packetBuffer[14]  = 49;
   packetBuffer[15]  = 52;
   
-  //Serial.println("3");
+  Serial.println("3");
 
   // all NTP fields have been given values, now
   // you can send a packet requesting a timestamp: 		   
   Udp.beginPacket(address, 123); //NTP requests are to port 123
-  //Serial.println("4");
+  Serial.println("4");
   Udp.write(packetBuffer,NTP_PACKET_SIZE);
-  //Serial.println("5");
+  Serial.println("5");
   Udp.endPacket(); 
-  //Serial.println("6");
+  Serial.println("6");
 }
 
 
