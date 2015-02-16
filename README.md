@@ -3,14 +3,16 @@
 **********************
 
 *********************************************
-*This software is free to use,              *
-*just please let me know, it's nice to hear *
-*that other people are using stuff I made :)*
+This software is free to use,              
+just please let me know, it's nice to hear 
+that other people are using stuff I made :)
 *********************************************
 This is the sketch for my Arduino Valentines gift.
 
 *************
+
 *Description*
+
 *************
 
 This is the source for a gift I made for my Valentine <3
