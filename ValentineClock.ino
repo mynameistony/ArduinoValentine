@@ -66,7 +66,7 @@ void setup(){
 void loop()
 {
   if(test.getButtonState()){
-    test.printRandomMessage(random(400,450));
+    test.printRandomMessage(random(400,500),false); //(Pick a number, with noise?)
     test.printDisplay(hour,minute,isAM);//,status);
   }
   

@@ -152,7 +152,7 @@ class Valentines{
     lcd->lightOff();
     
   }
-  
+    
   void setFade(int newFade){
     analogWrite(LEDpin,newFade);
   };
@@ -175,14 +175,27 @@ class Valentines{
     return !digitalRead(buttonPin);
   };
   
-  char* printRandomMessage(int magicNumber){
-    
+  char* printRandomMessage(int magicNumber, boolean withNoise){
     if(magicNumber == 420){
       rickRoll();
       return "RickRolled";
     }
+
+    if(withNoise){    
+     lcd->write(213);
+     lcd->write(228);
+     
+     lcd->write(213);
+     lcd->write(223);
+     
+     lcd->write(212);
+     lcd->write(227);
+
+     lcd->write(213);
+     lcd->write(220); 
+    }
     char* thisMessage = messages[random(messageCount)];
-    
+        
     lcd-> clear();
     
     lcd->lightOn(); 
