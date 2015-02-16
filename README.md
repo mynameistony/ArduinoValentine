@@ -52,7 +52,7 @@ or you can pick and pull, I don't care.
 	->For motion sensing light up
 
 **************************************************
-*There is a class in "stuff.h" that will         *
-*have to be modified if not using the exact parts*
+There is a class in "stuff.h" that will
+have to be modified if not using the exact parts
 **************************************************
 
