@@ -5,8 +5,8 @@
 #include "stuff.h"
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "11FX07005026";
-char pass[] = "FB6B4756AB";  
+char ssid[] = "network";
+char pass[] = "password";  
 int keyIndex = 0;            
 
 unsigned int localPort = 2390;
@@ -80,7 +80,7 @@ void loop()
    if(test.getDistance() < 20){
     test.lcd->lightOn();
     delay(1000);
-    test.printRandomMessage(random(400,450),false); //(Pick a number, with noise?)
+    test.printRandomMessage(random(0,100000),false); //(Pick a number, with noise?)
     test.printDisplay(hour,minute,isAM);//,status);       test.lcd->lightOn(); 
    }    
   }

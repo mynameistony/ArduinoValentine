@@ -282,6 +282,18 @@ class Valentines{
        lcd->write(2); 
 */   
 //    lcd->setPos(0,8);
+    if(thisAM)
+      if(thisHour > 6 && thisHour < 12){
+        lcd->print("Good morning!");
+        lcd->write(13);
+        lcd->print("It's ");
+      }
+    else
+      if(thisHour > 10){
+        lcd->print("Good night :)");
+        lcd->write(13);
+        lcd->print("It's ");
+      }
     
     if(thisHour < 10)
       lcd->print(" ");
