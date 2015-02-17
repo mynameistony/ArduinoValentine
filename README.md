@@ -19,9 +19,8 @@ This is the source for a gift I made for my Valentine <3
 
 You push a button, and it will pulse an LED, and print out a nice message
 
-//Still testing
-//I've added a WiFi NTP client to update the time every 30 seconds
-//It also uses an ultrasonic range finder as a motion sensing backlight toggle
+I've added a WiFi NTP client to update the time every 5 seconds
+It also uses an ultrasonic range finder as a motion sensing backlight toggle
 
 You're on your own in designing and implementing it, but here are some photos of mine to get you started
 https://imgur.com/a/8SGDb
