@@ -60,8 +60,7 @@ void setup(){
 //  Serial.println("Done.");
     Udp.begin(localPort);
     
-//    while(1)
-//      setTime(getTime());
+    setTime(getTime());
 
     
 }
@@ -79,7 +78,7 @@ void loop()
  
    if(test.getDistance() < 20){
     test.lcd->lightOn();
-    delay(1000);
+    delay(3000);
     test.printRandomMessage(random(0,100000),false); //(Pick a number, with noise?)
     test.printDisplay(hour,minute,isAM);//,status);       test.lcd->lightOn(); 
    }    
@@ -129,18 +128,21 @@ void loop()
 boolean setTime(int newTime){
   
       if(newTime > 0){
-      hour = (newTime / 100) + 12;
-      hour -= 8;
-      minute = newTime % 100;
+        hour = (newTime / 100) - 8;
+
+      if(hour < 1)
+        hour += 24;
+        
+          
+       if(hour > 12){
+         isAM = false;
+         hour -= 12;
+       }
+       else
+         isAM = true;
+        
+       minute = newTime % 100;
   
-      if (hour > 12){
-        isAM = true;
-        hour -= 12;  
-      }
-      else{
-        isAM = false; 
-      }
-      
       return true;
     }
     

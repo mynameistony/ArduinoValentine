@@ -8,7 +8,7 @@
 
 #include <SoftwareSerial.h>
 
-#define MESSAGE_COUNT 10
+#define MESSAGE_COUNT 15
 
 
 class LCD {
@@ -99,8 +99,22 @@ class Valentines{
 
   
   char* messages[MESSAGE_COUNT]{
-    "I love you!", "You're         beautiful", "You're         wonderful", "You're perfect", "Be my          valentine", "Don't ever     change", "TR + HP 4-ever", "Be Mine", "I'm crazy for  you", "You light up my heart"
-  
+    "I love you!",
+    "You're         beautiful",
+    "You're         wonderful",
+    "You're         incredible!",
+    "You're perfect",
+    "Be my          valentine",
+    "Don't ever     change",
+    "TR + HP 4-ever",
+    "Be Mine",
+    "I'm crazy for  you",
+    "You light up my heart",
+    "You're pretty",
+    "Awesome sauce...",
+    "I can't        \"resist\" you",
+    "You're just    \"watt\" I need"
+
   };
   
   Valentines(int newRxPin, int newTxPin, int newBaud, int newTrigPin, int newEchoPin, int newLED, int newButton){
@@ -242,6 +256,8 @@ class Valentines{
      lcd->write(213);
      lcd->write(220); 
     }
+    
+    randomSeed(magicNumber);
     char* thisMessage = messages[random(messageCount)];
         
     lcd-> clear();
@@ -282,21 +298,32 @@ class Valentines{
        lcd->write(2); 
 */   
 //    lcd->setPos(0,8);
-    if(thisAM)
+    if(thisAM){
       if(thisHour > 6 && thisHour < 12){
         lcd->print("Good morning!");
         lcd->write(13);
         lcd->print("It's ");
       }
-    else
+      else{
+        lcd->print("You're beautiful");
+        lcd->print("It's ");
+      }
+    }
+    else{
       if(thisHour > 10){
         lcd->print("Good night :)");
         lcd->write(13);
         lcd->print("It's ");
+      }else{
+        lcd->print("I love you!");
+        lcd->write(13);
+        lcd->print("It's ");
       }
-    
-    if(thisHour < 10)
-      lcd->print(" ");
+    }
+
+      //Uncomment for space-padded hour    
+//    if(thisHour < 10)
+//      lcd->print(" ");
     
     lcd->print(thisHour);
     lcd->print(":");
