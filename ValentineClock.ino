@@ -5,14 +5,14 @@
 #include "stuff.h"
 
 int status = WL_IDLE_STATUS;
-char ssid[] = "network";
-char pass[] = "password";  
-int keyIndex = 1;            
+char ssid[] = "11FX07005026";
+char pass[] = "FB6B4756AB";  
+int keyIndex = 0;            
 
 unsigned int localPort = 2390;
 
-IPAddress timeServer(216,228,192,69);
-// IPAddress timeServer(132, 163, 4, 102); // time-b.timefreq.bldrdoc.gov NTP server
+//IPAddress timeServer(192,168,1,1);
+ IPAddress timeServer(132, 163, 4, 102); // time-b.timefreq.bldrdoc.gov NTP server
 // IPAddress timeServer(132, 163, 4, 103); // time-c.timefreq.bldrdoc.gov NTP server
 
 const int NTP_PACKET_SIZE = 48;
@@ -28,7 +28,7 @@ boolean isAM = false;
 unsigned long lastUpdate = 0;
 unsigned long lastLight = 0;
 
-Valentines test(3,4,9600,6,5,9,8);
+Valentines test(2,3,9600,6,5,9,8);
 void setup(){
 
   Serial.begin(9600);
@@ -39,7 +39,7 @@ void setup(){
     while(true);
   } 
   
-/*  while ( status != WL_CONNECTED) { 
+  while ( status != WL_CONNECTED) { 
 //    Serial.print("Connecting: ");
 //    Serial.print(ssid);
     test.lcd->clear();
@@ -54,42 +54,63 @@ void setup(){
     delay(5000);
   }
     test.lcd->write(13);
+    test.lcd->lightOn();
     test.lcd->print("Done");
-    printWifiStatus();    
+//  printWifiStatus();    
 //  Serial.println("Done.");
     Udp.begin(localPort);
-  
-    setTime(getTime());
-    */
+    
+//    while(1)
+//      setTime(getTime());
+
+    
 }
 
 void loop()
 {
+  
+  unsigned long thisMillis = millis();
+  
   if(test.getButtonState()){
-    test.printRandomMessage(random(400,500),false); //(Pick a number, with noise?)
+    test.lcd->lightOn();
+    test.printRandomMessage(random(400,450),false); //(Pick a number, with noise?)
     test.printDisplay(hour,minute,isAM);//,status);
+  }else{
+ 
+   if(test.getDistance() < 20){
+    test.lcd->lightOn();
+    delay(1000);
+    test.printRandomMessage(random(400,450),false); //(Pick a number, with noise?)
+    test.printDisplay(hour,minute,isAM);//,status);       test.lcd->lightOn(); 
+   }    
   }
+ 
+    if(thisMillis - lastUpdate > 5000){
+      lastUpdate = thisMillis;
+   
+      setTime(getTime());
+    
+      test.printDisplay(hour,minute,isAM);//,status);
+      test.lcd->lightOff();      
+    }
+    
+   if(hour == 4){
+     if(minute == 20){
+       for(int i = 0; i < 255; i++)
+         test.setFade(i);
+       for(int i = 255; i >=0; i--)
+         test.setFade(i);
+     }
+   }
   
-  if(millis() - lastLight > 5000){
-    lastLight = millis(); 
-    test.lcd->lightOff();
-  }  
   
-  if(millis() - lastUpdate > 30000){
-    lastUpdate = millis();
-    //setTime(getTime());
-    test.printDisplay(hour,minute,isAM);//,status);
-  }
+}
+
   
- //if(test.getDistance() < 50){
- //   Remove this
- //   test.setFade(map(test.getDistance(),0,50,0,255));
- //   test.lcd->lightOn();
-  //  }
   //Serial.print(test.getDistance());
   //Serial.print("\t");
   
-  Serial.print(hour);
+  /*Serial.print(hour);
   Serial.print(":");
   if(minute < 10)
     Serial.print("0");
@@ -99,19 +120,21 @@ void loop()
     Serial.println("AM");
   else
     Serial.println("PM");
-    
-}
+  */    
+
 boolean setTime(int newTime){
+  
       if(newTime > 0){
-      hour = (newTime / 100) - 8;
+      hour = (newTime / 100) + 12;
+      hour -= 8;
       minute = newTime % 100;
   
       if (hour > 12){
-        isAM = false;
+        isAM = true;
         hour -= 12;  
       }
       else{
-        isAM = true; 
+        isAM = false; 
       }
       
       return true;
@@ -123,6 +146,7 @@ boolean setTime(int newTime){
   
 }
 int getTime(){
+  
   sendNTPpacket(timeServer);
   
   delay(1000);  
@@ -135,13 +159,15 @@ int getTime(){
     unsigned long secsSince1900 = highWord << 16 | lowWord;  
     const unsigned long seventyYears = 2208988800UL;     
     unsigned long epoch = secsSince1900 - seventyYears;  
+    
     int hour = (epoch  % 86400L) / 3600;
     int minute = (epoch % 3600) / 60;
     Serial.print("epoch: ");
-    Serial.println(epoch);
-    Serial.println(hour);
+    Serial.println(epoch);  
+    Serial.print(hour);
+    Serial.print(":");
     Serial.println(minute);
-    return hour * 100 + minute;
+    return (hour * 100) + minute;
   }
   else  {
     Serial.println("Failed");
@@ -181,7 +207,7 @@ unsigned long sendNTPpacket(IPAddress& address)
 }
 
 
-void printWifiStatus() {
+void printWifiStatus(){
   // print the SSID of the network you're attached to:
   Serial.print("SSID: ");
   Serial.println(WiFi.SSID());

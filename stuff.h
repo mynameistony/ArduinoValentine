@@ -125,32 +125,80 @@ class Valentines{
     lcd->lightOn();
     
     lcd->clear();
-    lcd->print("Never gonna give you up");
-    delay(2000);
+    lcd->print("Never gonna give you up");    
+    for(int i = 0; i < 255; i++){
+      setFade(i);
+      delay(10); 
+    }
+      
+//    delay(2000);
     lcd->clear();
     lcd->print("Never gonna let you down");
-    delay(2000);
+    for(int i = 255; i > 0; i--){
+      setFade(i);
+      delay(10); 
+    }
+      
+//    delay(2000);
+
     lcd->clear();
     lcd->print("Never gonna run around");
-    delay(1000);
+    for(int i = 0; i < 255; i++){
+      setFade(i);
+      delay(10); 
+    }
+      
+//''    delay(1000);
+
     lcd->clear();
     lcd->print("and desert you");
-    delay(2000);
+    for(int i = 255; i > 0; i--){
+      setFade(i);    
+      delay(10); 
+    }      
+//    delay(2000);
     lcd->clear();
     lcd->print("Never gonna make you cry");
-    delay(2000);
+    for(int i = 0; i < 255; i++){
+      setFade(i);
+      delay(10); 
+    }
+      
+    //delay(2000);
     lcd->clear();
     lcd->print("Never gonna say goodbye");
-    delay(2000);
+    for(int i = 255; i > 0; i--){
+      setFade(i);    
+      delay(10); 
+    }
+      
+//    delay(2000);
+
     lcd->clear();
     lcd->print("Never gonna tell a lie");
-    delay(1000);    
+    for(int i = 0; i < 255; i++){
+      setFade(i);
+      delay(10); 
+    }
+      
+//    delay(1000);    
+
     lcd->clear();
     lcd->print("and hurt you :P");
-    delay(2000);    
-    
-    lcd->lightOff();
-    
+    for(int i = 0; i < 255; i++){
+      setFade(i);
+      delay(10); 
+    }
+ 
+//    delay(2000);    
+
+    lcd->lightOff();      
+
+    for(int i = 255; i >= 0; i--){
+      setFade(i);    
+      delay(10); 
+    }
+      
   }
     
   void setFade(int newFade){
@@ -233,7 +281,7 @@ class Valentines{
     else
        lcd->write(2); 
 */   
-    lcd->setPos(0,8);
+//    lcd->setPos(0,8);
     
     if(thisHour < 10)
       lcd->print(" ");
