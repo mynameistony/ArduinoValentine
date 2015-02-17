@@ -96,10 +96,14 @@ void loop()
     
    if(hour == 4){
      if(minute == 20){
-       for(int i = 0; i < 255; i++)
+       for(int i = 0; i < 255; i++){
          test.setFade(i);
-       for(int i = 255; i >=0; i--)
+         delay(5);
+       }
+       for(int i = 255; i >=0; i--){
          test.setFade(i);
+         delay(5);
+       }
      }
    }
   

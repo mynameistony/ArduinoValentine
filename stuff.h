@@ -288,6 +288,10 @@ class Valentines{
     
     lcd->print(thisHour);
     lcd->print(":");
+    
+    if(thisMinute < 10)
+      lcd->print("0");
+      
     lcd->print(thisMinute);
     
     if(thisAM)
